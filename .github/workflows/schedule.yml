@@ -3,13 +3,14 @@ name: GitHub Box
 on:
   schedule:
     - cron: "0 */12 * * *" # every 24 hours
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
   push:
     branches: master
 
 jobs:
   update-gist:
-    runs-on: macos-latest
-
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
       - name: Update gist
@@ -17,4 +18,4 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
           GIST_ID: ${{ secrets.GIST_ID }}
-          CONSIDER_PRIVATE: false
+          CONSIDER_PRIVATE: ${{ secrets.CONSIDER_PRIVATE }}
